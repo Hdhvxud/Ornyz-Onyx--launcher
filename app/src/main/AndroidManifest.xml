@@ -79,18 +79,10 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.VictoriaAccessibilityService"
-            android:exported="true"
-            android:label="Ornyz gestures"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
+        <!-- DIAGNOSTIC BUILD ONLY: Accessibility service declaration intentionally omitted
+             to test whether Play Protect's install block is related to accessibility access.
+             This disables Ornyz gestures that depend on AccessibilityService. Do not merge
+             this diagnostic change into the normal release without reviewing the test result. -->
 
         <!-- The clock widget's own settings. Exported because the system starts it on behalf
              of whichever launcher is showing the widget, including this one. -->
