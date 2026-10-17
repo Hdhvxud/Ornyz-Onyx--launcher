@@ -168,7 +168,9 @@ fun VictoriaNavHost(
                 app.appRepository.privateSpaceRow(state),
         )
     }
-    LaunchedEffect(Unit) { reloadApps(known = null, pass = reloadOrder.begin()) }
+    // shortcutChanges is a StateFlow starting at 0, so the effect above also performs the
+    // initial load. A second Unit-keyed reload here started another full app enumeration and
+    // superseded the first one before it could publish, wasting work on startup.
 
     // Before anything the user does can write to the store, so "the store is empty" still
     // means "this is a first run" when it is read.
