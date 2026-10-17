@@ -79,18 +79,6 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".service.VictoriaAccessibilityService"
-            android:exported="true"
-            android:label="Ornyz gestures"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
 
         <!-- The clock widget's own settings. Exported because the system starts it on behalf
              of whichever launcher is showing the widget, including this one. -->
@@ -132,15 +120,6 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".media.NowPlayingListenerService"
-            android:exported="true"
-            android:label="Ornyz Now Playing"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
 
     </application>
 </manifest>
