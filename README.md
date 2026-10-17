@@ -1,18 +1,15 @@
-# Victoria Launcher
+# Ornyz
 
 An open source alternative to [Niagara Launcher](https://niagaralauncher.app) — a
 minimal, list-based Android home screen.
 
-![Victoria Launcher](docs/banner2.png)
+![Ornyz](docs/banner2.png)
 
 ## Install
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="70">](https://f-droid.org/packages/dev.victorialauncher/)
+Download a build from [Releases](../../releases) when one is published. Builds signed with different keys cannot update each other in place.
 
-Or grab the APK from [Releases](../../releases). Both carry the same signature,
-so you can move between them without uninstalling.
-
-Once it is installed, pick Victoria Launcher under
+Once it is installed, pick Ornyz under
 **Settings → Apps → Default apps → Home app**.
 
 Requires Android 8.0 (API 26) or newer.
@@ -42,7 +39,7 @@ names every app you have arranged and a backup that runs without the app cannot
 leave a private space out of it.
 
 Work profiles are picked up automatically. A private space needs Android 15 or
-later and Victoria set as your default home app.
+later and Ornyz set as your default home app.
 
 ## Changelog
 
