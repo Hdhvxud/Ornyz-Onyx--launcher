@@ -1328,7 +1328,9 @@ fun AppListScreen(
             EdgeScrubber(
                 letters = displayModel.letters,
                 scrubY = scrubY,
+                pullPx = pullPx,
                 band = band,
+                side = activeSide,
                 modifier = Modifier.align(
                     if (activeSide == EdgeSide.LEFT) Alignment.CenterStart else Alignment.CenterEnd
                 ),
