@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -20,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,11 +34,11 @@ private const val LETTER_HALF_DP = 10f
 const val SCRUB_BUBBLE_INSET_DP = EDGE_INSET_DP + BELL_AMPLITUDE_DP + LETTER_HALF_DP + 18f
 
 /**
- * A compact, evenly spaced alphabet pod inspired by Niagara's orderly edge index.
+ * A slim, Niagara-inspired alphabet rail.
  *
- * The pill stays still instead of bowing around the finger. The selected letter gets the
- * system's Material You primary colour, which is derived from the wallpaper on Android 12+.
- * Pointer coordinates are read only to choose the active segment, keeping fast scrubs cheap.
+ * The letters stay clean and evenly spaced rather than looking like separate buttons.
+ * Only the selected letter gets a wallpaper-derived Material You accent capsule, so the
+ * active position is easy to follow without adding visual noise during fast scrubbing.
  */
 @Composable
 fun EdgeScrubber(
@@ -58,22 +60,22 @@ fun EdgeScrubber(
 
     Box(
         modifier = modifier
-            .width(50.dp)
+            .width(36.dp)
             .fillMaxHeight(),
     ) {
         Surface(
             modifier = Modifier
                 .align(if (side == EdgeSide.LEFT) Alignment.TopStart else Alignment.TopEnd)
                 .offset { IntOffset(0, band.topPx.roundToInt()) }
-                .width(42.dp)
+                .width(30.dp)
                 .height((band.heightPx / density).dp),
-            shape = RoundedCornerShape(28.dp),
-            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.58f),
+            shape = RoundedCornerShape(24.dp),
+            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.40f),
             border = BorderStroke(
-                1.dp,
-                MaterialTheme.colorScheme.outline.copy(alpha = 0.42f),
+                0.7.dp,
+                MaterialTheme.colorScheme.outline.copy(alpha = 0.22f),
             ),
-            shadowElevation = 8.dp,
+            shadowElevation = 3.dp,
         ) {
             Column(
                 modifier = Modifier
@@ -81,22 +83,24 @@ fun EdgeScrubber(
                     .padding(horizontal = 3.dp, vertical = 5.dp),
             ) {
                 letters.forEachIndexed { index, letter ->
+                    val selected = index == activeIndex
                     Box(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxWidth()
-                            .padding(vertical = 1.dp)
+                            .padding(vertical = 0.5.dp)
                             .background(
-                                color = if (index == activeIndex) accent.copy(alpha = 0.96f) else Color.Transparent,
-                                shape = RoundedCornerShape(50),
+                                color = if (selected) accent.copy(alpha = 0.96f) else Color.Transparent,
+                                shape = if (selected) CircleShape else RoundedCornerShape(50),
                             ),
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
                             text = letter.toString(),
-                            color = if (index == activeIndex) activeText else idleText.copy(alpha = 0.88f),
-                            fontSize = 12.sp,
+                            color = if (selected) activeText else idleText.copy(alpha = 0.82f),
+                            fontSize = if (selected) 13.sp else 11.sp,
                             lineHeight = 12.sp,
+                            fontWeight = if (selected) FontWeight.Bold else FontWeight.Medium,
                         )
                     }
                 }
