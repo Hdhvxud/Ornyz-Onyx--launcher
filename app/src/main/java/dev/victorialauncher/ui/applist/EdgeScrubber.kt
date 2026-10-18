@@ -23,7 +23,13 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.victorialauncher.data.EdgeSide
 import kotlin.math.roundToInt
+
+private const val EDGE_INSET_DP = 28f
+private const val BELL_AMPLITUDE_DP = 112f
+private const val LETTER_HALF_DP = 10f
+const val SCRUB_BUBBLE_INSET_DP = EDGE_INSET_DP + BELL_AMPLITUDE_DP + LETTER_HALF_DP + 18f
 
 /**
  * A compact, evenly spaced alphabet pod inspired by Niagara's orderly edge index.
@@ -36,7 +42,9 @@ import kotlin.math.roundToInt
 fun EdgeScrubber(
     letters: List<Char>,
     scrubY: () -> Float?,
+    pullPx: () -> Float,
     band: ScrubBand,
+    side: EdgeSide,
     modifier: Modifier = Modifier,
 ) {
     if (letters.isEmpty()) return
@@ -55,7 +63,7 @@ fun EdgeScrubber(
     ) {
         Surface(
             modifier = Modifier
-                .align(Alignment.TopCenter)
+                .align(if (side == EdgeSide.LEFT) Alignment.TopStart else Alignment.TopEnd)
                 .offset { IntOffset(0, band.topPx.roundToInt()) }
                 .width(42.dp)
                 .height((band.heightPx / density).dp),
