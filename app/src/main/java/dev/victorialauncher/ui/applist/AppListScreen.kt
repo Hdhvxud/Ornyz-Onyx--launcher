@@ -323,6 +323,13 @@ fun AppListScreen(
         label = "bottomFade",
     )
 
+    // The overlay stays composed while hidden, so opening can animate without delaying app loading.
+    val entranceProgress by animateFloatAsState(
+        targetValue = if (visible) 1f else 0f,
+        animationSpec = tween(durationMillis = 190, easing = FastOutLinearInEasing),
+        label = "appListEntrance",
+    )
+
     /** Height of the pinned search field, so list-relative offsets can be compared to taps. */
     var searchHeightPx by remember { mutableIntStateOf(0) }
 
@@ -1043,11 +1050,13 @@ fun AppListScreen(
               .graphicsLayer {
                   val pulled = collapseProvider()
                   val progress = (abs(pulled) / dismissPullPx).coerceIn(0f, 1f)
-                  translationY = pulled * 0.6f
-                  val scale = 1f - 0.12f * progress
+                  // Fade and lift the drawer in quickly, independently of app enumeration.
+                  val entrance = entranceProgress.coerceIn(0f, 1f)
+                  translationY = pulled * 0.6f + (1f - entrance) * 18.dp.toPx()
+                  val scale = (1f - 0.12f * progress) * (0.985f + 0.015f * entrance)
                   scaleX = scale
                   scaleY = scale
-                  alpha = 1f - 0.85f * progress
+                  alpha = (1f - 0.85f * progress) * entrance
               },
       ) {
         // The keyboard covers the bottom of the overlay, and with a field pinned down there
